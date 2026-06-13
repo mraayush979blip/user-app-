@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Search, Filter, RotateCcw, Package, ChevronRight, X } from 'lucide-react';
-import { mockShipments } from '../data/mockData';
+import { fetchShipments } from '../services/api';
+import { useEffect } from 'react';
 import type { Shipment, ShipmentStatus } from '../types';
 
 const statusColors: Record<ShipmentStatus, string> = {
@@ -14,10 +15,23 @@ const statusColors: Record<ShipmentStatus, string> = {
 const Orders = () => {
   const [activeTab, setActiveTab] = useState<'current' | 'history'>('current');
   const [searchQuery, setSearchQuery] = useState('');
+  const [shipments, setShipments] = useState<Shipment[]>([]);
   const [selectedOrder, setSelectedOrder] = useState<Shipment | null>(null);
 
+  useEffect(() => {
+    const loadShipments = async () => {
+      try {
+        const data = await fetchShipments();
+        setShipments(data);
+      } catch (err) {
+        console.error('Failed to load shipments:', err);
+      }
+    };
+    loadShipments();
+  }, []);
+
   // Filter based on tab and search query
-  const filteredOrders = mockShipments.filter(shipment => {
+  const filteredOrders = shipments.filter(shipment => {
     const isHistory = shipment.status === 'Delivered' || shipment.status === 'Cancelled';
     const matchesTab = activeTab === 'current' ? !isHistory : isHistory;
     const matchesSearch = shipment.trackingId.toLowerCase().includes(searchQuery.toLowerCase()) || 

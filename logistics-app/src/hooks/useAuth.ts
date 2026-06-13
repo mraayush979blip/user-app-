@@ -5,21 +5,23 @@ export const useAuth = () => {
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    // Check if user is logged in
-    const authStatus = localStorage.getItem('isAuthenticated');
-    if (authStatus === 'true') {
+    // Check if user has a token
+    const token = localStorage.getItem('accessToken');
+    if (token) {
       setIsAuthenticated(true);
     }
     setLoading(false);
   }, []);
 
-  const login = () => {
-    localStorage.setItem('isAuthenticated', 'true');
+  const login = (accessToken: string, refreshToken: string) => {
+    localStorage.setItem('accessToken', accessToken);
+    localStorage.setItem('refreshToken', refreshToken);
     setIsAuthenticated(true);
   };
 
   const logout = () => {
-    localStorage.removeItem('isAuthenticated');
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
     setIsAuthenticated(false);
   };
 

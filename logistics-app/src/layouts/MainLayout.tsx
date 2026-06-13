@@ -2,6 +2,7 @@
 import { Outlet, NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { LayoutDashboard, Package, User, LogOut, Search } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
+import { mockUser } from '../data/mockData';
 
 const MainLayout = () => {
   const { logout } = useAuth();
@@ -77,9 +78,11 @@ const MainLayout = () => {
             </div>
           </div>
           <div className="flex items-center space-x-4">
-             <div className="h-8 w-8 rounded-full bg-orange-100 flex items-center justify-center text-primary font-bold">
-                A
-             </div>
+             <img 
+               src={mockUser.avatar} 
+               alt="User profile" 
+               className="h-8 w-8 rounded-full object-cover border border-gray-200"
+             />
           </div>
         </header>
 

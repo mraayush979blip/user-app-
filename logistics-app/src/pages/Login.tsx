@@ -10,13 +10,26 @@ const Login = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (username === 'demo_user' && password === 'Demo@123') {
-      login();
+    setError('');
+    
+    try {
+      const response = await fetch('/api/token/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
+      });
+
+      if (!response.ok) {
+        throw new Error('Invalid username or password');
+      }
+
+      const data = await response.json();
+      login(data.access, data.refresh);
       navigate('/dashboard');
-    } else {
-      setError('Invalid username or password');
+    } catch (err: any) {
+      setError(err.message || 'An error occurred during login');
     }
   };
 
