@@ -1,19 +1,7 @@
 import { useState } from 'react';
-import { Package, Truck, CheckCircle, Clock, Plus, Search } from 'lucide-react';
+import { Package, Plus, Search } from 'lucide-react';
 import { mockUser, mockShipments } from '../data/mockData';
 import type { ShipmentStatus } from '../types';
-
-const StatCard = ({ title, value, icon: Icon, colorClass }: { title: string, value: number, icon: any, colorClass: string }) => (
-  <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-center space-x-4">
-    <div className={`p-3 rounded-full ${colorClass}`}>
-      <Icon className="w-6 h-6" />
-    </div>
-    <div>
-      <p className="text-sm font-medium text-gray-500">{title}</p>
-      <p className="text-2xl font-bold text-gray-900">{value}</p>
-    </div>
-  </div>
-);
 
 const statusColors: Record<ShipmentStatus, string> = {
   'Pending': 'bg-yellow-100 text-yellow-800',
@@ -25,11 +13,6 @@ const statusColors: Record<ShipmentStatus, string> = {
 
 const Dashboard = () => {
   const [trackingId, setTrackingId] = useState('');
-  
-  const activeShipments = mockShipments.filter(s => s.status === 'In Transit' || s.status === 'Out for Delivery').length;
-  const deliveredOrders = mockShipments.filter(s => s.status === 'Delivered').length;
-  const pendingOrders = mockShipments.filter(s => s.status === 'Pending').length;
-  const totalOrders = mockShipments.length;
 
   const recentShipments = mockShipments.slice(0, 5);
 
@@ -69,13 +52,7 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Stats */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <StatCard title="Active Shipments" value={activeShipments} icon={Truck} colorClass="bg-blue-100 text-blue-600" />
-        <StatCard title="Delivered Orders" value={deliveredOrders} icon={CheckCircle} colorClass="bg-green-100 text-green-600" />
-        <StatCard title="Pending Orders" value={pendingOrders} icon={Clock} colorClass="bg-yellow-100 text-yellow-600" />
-        <StatCard title="Total Orders" value={totalOrders} icon={Package} colorClass="bg-purple-100 text-purple-600" />
-      </div>
+
 
       {/* Recent Shipments */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
