@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Package, Plus, Search } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Plus, Search } from 'lucide-react';
 import { mockUser, mockShipments } from '../data/mockData';
 import type { ShipmentStatus } from '../types';
 
@@ -24,10 +25,10 @@ const Dashboard = () => {
           <h1 className="text-2xl font-bold text-gray-900">Welcome back, {mockUser.name.split(' ')[0]}!</h1>
           <p className="text-gray-500 mt-1">Here is what's happening with your shipments today.</p>
         </div>
-        <button className="flex items-center justify-center space-x-2 bg-primary hover:bg-orange-600 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+        <Link to="/orders" className="flex items-center justify-center space-x-2 bg-primary hover:bg-orange-600 text-white px-4 py-2 rounded-lg font-medium transition-colors">
           <Plus className="w-5 h-5" />
           <span>New Shipment</span>
-        </button>
+        </Link>
       </div>
 
       {/* Quick Track */}
@@ -46,9 +47,9 @@ const Dashboard = () => {
               className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg leading-5 bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary sm:text-sm"
             />
           </div>
-          <button className="bg-gray-900 hover:bg-gray-800 text-white px-6 py-3 rounded-lg font-medium transition-colors whitespace-nowrap">
+          <Link to="/orders" className="bg-gray-900 hover:bg-gray-800 text-white px-6 py-3 rounded-lg font-medium transition-colors whitespace-nowrap">
             Track Now
-          </button>
+          </Link>
         </div>
       </div>
 
